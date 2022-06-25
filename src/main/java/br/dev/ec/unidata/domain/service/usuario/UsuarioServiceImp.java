@@ -1,4 +1,4 @@
-package br.dev.ec.unidata.resources.domain.service.usuario;
+package br.dev.ec.unidata.domain.service.usuario;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,10 +16,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.dev.ec.unidata.UnidataApplication;
-import br.dev.ec.unidata.resources.domain.repositorio.RoleRep;
-import br.dev.ec.unidata.resources.domain.repositorio.UsuarioRep;
-import br.dev.ec.unidata.resources.domain.usuario.Role;
-import br.dev.ec.unidata.resources.domain.usuario.Usuario;
+import br.dev.ec.unidata.domain.repositorio.RoleRep;
+import br.dev.ec.unidata.domain.repositorio.UsuarioRep;
+import br.dev.ec.unidata.domain.usuario.Role;
+import br.dev.ec.unidata.domain.usuario.Usuario;
 import lombok.RequiredArgsConstructor;
 
 @Service @RequiredArgsConstructor @Transactional

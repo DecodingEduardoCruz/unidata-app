@@ -1,6 +1,6 @@
-package br.dev.ec.unidata.resources.domain.repositorio;
+package br.dev.ec.unidata.domain.repositorio;
 
-import br.dev.ec.unidata.resources.domain.usuario.Usuario;
+import br.dev.ec.unidata.domain.usuario.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

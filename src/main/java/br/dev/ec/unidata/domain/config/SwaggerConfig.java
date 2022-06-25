@@ -1,4 +1,4 @@
-package br.dev.ec.unidata.resources.domain.config;
+package br.dev.ec.unidata.domain.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

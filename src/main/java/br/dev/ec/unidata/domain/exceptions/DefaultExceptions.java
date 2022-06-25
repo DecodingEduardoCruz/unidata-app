@@ -1,4 +1,4 @@
-package br.dev.ec.unidata.resources.domain.exceptions;
+package br.dev.ec.unidata.domain.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

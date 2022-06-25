@@ -1,4 +1,4 @@
-package br.dev.ec.unidata.resources.domain.usuario;
+package br.dev.ec.unidata.domain.usuario;
 
 import lombok.Data;
 import javax.persistence.Entity;

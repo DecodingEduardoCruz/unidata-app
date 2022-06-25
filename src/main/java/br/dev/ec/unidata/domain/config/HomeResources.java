@@ -1,4 +1,4 @@
-package br.dev.ec.unidata.resources.domain.config;
+package br.dev.ec.unidata.domain.config;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;

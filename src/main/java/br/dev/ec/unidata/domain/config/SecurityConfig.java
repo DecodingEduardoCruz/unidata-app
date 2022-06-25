@@ -1,4 +1,4 @@
-package br.dev.ec.unidata.resources.domain.config;
+package br.dev.ec.unidata.domain.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.dev.ec.unidata.resources.domain.service.filter.CustomAuthenticationFilter;
-import br.dev.ec.unidata.resources.domain.service.filter.CustomAuthorizationFilter;
+import br.dev.ec.unidata.domain.service.filter.CustomAuthenticationFilter;
+import br.dev.ec.unidata.domain.service.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 
 @Configuration @EnableWebSecurity @RequiredArgsConstructor

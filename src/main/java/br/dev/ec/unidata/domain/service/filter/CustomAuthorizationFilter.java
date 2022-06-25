@@ -1,4 +1,4 @@
-package br.dev.ec.unidata.resources.domain.service.filter;
+package br.dev.ec.unidata.domain.service.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
