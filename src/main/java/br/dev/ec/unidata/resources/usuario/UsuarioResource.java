@@ -54,7 +54,7 @@ public class UsuarioResource {
 
 	@GetMapping("/usuario")
 	public ResponseEntity<List<Usuario>> todos(){		
-		logger.info("Busca de cooperado solicitada:");
+		logger.info("Busca de usuário solicitada:");
 		return ResponseEntity.ok(usuarioService.getUsuarios());
 	}	
 
@@ -117,7 +117,7 @@ public class UsuarioResource {
 		}else {
 			throw new RuntimeException("Seu Token precisa de atualização!");
 		}
-		logger.info("Busca de cooperado solicitada:");
+		logger.info("Busca de usuário solicitada:");
 	}
 }
 
