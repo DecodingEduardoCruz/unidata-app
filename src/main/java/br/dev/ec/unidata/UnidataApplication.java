@@ -14,8 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import br.dev.ec.unidata.domain.service.usuario.UsuarioService;
 import br.dev.ec.unidata.domain.usuario.Role;
 import br.dev.ec.unidata.domain.usuario.Usuario;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @SpringBootApplication
+@SecurityScheme(name = "javainuseapi", scheme = "Bearer", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class UnidataApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
