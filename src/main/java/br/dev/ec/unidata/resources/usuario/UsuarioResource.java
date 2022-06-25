@@ -63,14 +63,14 @@ public class UsuarioResource {
 		return ResponseEntity.created(uri).body(usuarioService.salvar(usuario));
 	}	
 
-	@PostMapping("/permissao")
+	@PostMapping("/role")
 	public ResponseEntity<Role> saveRole(@RequestBody Role role){
 		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/nova/permissao").toUriString());
 		logger.info("Novo cadastro de permissão solicidado:");
 		return ResponseEntity.created(uri).body(usuarioService.saveRole(role));
 	}	
 
-	@PostMapping("/permisao")
+	@PostMapping("/addrole")
 	public ResponseEntity<?> permissaoToCooperado(@RequestBody RoleToCooperado form){
 		usuarioService.addRole(form.getUsername(), form.getRoleName());
 		logger.info("Nova permissão adicionada:");
