@@ -34,7 +34,8 @@ public class UnidataApplication extends SpringBootServletInitializer{
 	
 	@Bean
 	CommandLineRunner run(UsuarioService usuarioService) {		
-		return args -> {			
+		return args -> {	
+			if(usuarioService.getUsuarios().isEmpty()) {
 				usuarioService.saveRole(new Role(null, "ROLE_USER"));
 				usuarioService.saveRole(new Role(null, "ROLE_ADMIN"));
 				
@@ -42,7 +43,7 @@ public class UnidataApplication extends SpringBootServletInitializer{
 				
 				usuarioService.addRole("admin", "ROLE_USER");
 				usuarioService.addRole("admin", "ROLE_ADMIN");
-						
+			}						
 		};
 	}
 
