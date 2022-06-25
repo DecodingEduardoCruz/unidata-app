@@ -12,10 +12,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import br.dev.ec.unidata.domain.service.filter.CustomAuthenticationFilter;
 import br.dev.ec.unidata.domain.service.filter.CustomAuthorizationFilter;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import lombok.RequiredArgsConstructor;
+
 
 @Configuration @EnableWebSecurity @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -32,10 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
 		customAuthenticationFilter.setFilterProcessesUrl("/login");
 		
+		http.cors();
 		http.csrf().disable();
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);		
+		http.headers().addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*"));		
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/", "/swagger/**", "/javainuse-openapi/**").permitAll();
 		http.authorizeRequests().antMatchers("/login/**", "/token/**").permitAll();
-		http.authorizeRequests().antMatchers(HttpMethod.GET, "/swagger/**").permitAll();
 		http.authorizeRequests().anyRequest().permitAll();
 		http.addFilter(customAuthenticationFilter);
 		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -45,6 +51,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
+	}
+	
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+		source.registerCorsConfiguration("/**", corsConfiguration);
+		return source;
 	}
 
 }
