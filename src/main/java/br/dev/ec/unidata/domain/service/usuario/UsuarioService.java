@@ -2,8 +2,8 @@ package br.dev.ec.unidata.domain.service.usuario;
 
 import java.util.List;
 
-import br.dev.ec.unidata.domain.usuario.Role;
-import br.dev.ec.unidata.domain.usuario.Usuario;
+import br.dev.ec.unidata.domain.model.usuario.Role;
+import br.dev.ec.unidata.domain.model.usuario.Usuario;
 
 public interface UsuarioService {
 	List<Usuario> getUsuarios();

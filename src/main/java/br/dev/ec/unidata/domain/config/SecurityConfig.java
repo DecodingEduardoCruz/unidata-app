@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);		
 		http.headers().addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*"));		
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/", "/swagger/**", "/javainuse-openapi/**").permitAll();
-		http.authorizeRequests().antMatchers("/login/**", "/token/**").permitAll();
+		http.authorizeRequests().antMatchers("/login/**", "/publico/token/**").permitAll();
 		http.authorizeRequests().antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN");
 		http.authorizeRequests().antMatchers("/restrito/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
 		http.authorizeRequests().antMatchers("/publico/**").permitAll();

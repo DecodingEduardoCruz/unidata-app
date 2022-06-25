@@ -1,4 +1,4 @@
-package br.dev.ec.unidata.domain.usuario;
+package br.dev.ec.unidata.domain.model.usuario;
 
 import lombok.Data;
 import java.util.ArrayList;
@@ -21,15 +21,19 @@ import lombok.NoArgsConstructor;
 public class Usuario {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	
-	private Long id;	
+	private Long id;
+	
+	@Column(unique = true)
+	private Integer matricula;
+	
 	@Column(unique = true)
 	private String username;
 	
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String password;	
-
 	private String name;
 	private String fone;
+	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
 	
 	@JoinTable(name = "usuario_roles")
 	@ManyToMany(fetch = FetchType.EAGER)

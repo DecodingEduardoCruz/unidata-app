@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import br.dev.ec.unidata.domain.model.usuario.Role;
+import br.dev.ec.unidata.domain.model.usuario.Usuario;
 import br.dev.ec.unidata.domain.service.usuario.UsuarioService;
-import br.dev.ec.unidata.domain.usuario.Role;
-import br.dev.ec.unidata.domain.usuario.Usuario;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
@@ -40,10 +40,10 @@ public class UnidataApplication extends SpringBootServletInitializer{
 	CommandLineRunner run(UsuarioService usuarioService) {		
 		return args -> {	
 			if(usuarioService.getUsuarios() == null) {
-				usuarioService.saveRole(new Role(null, "ROLE_USER"));
-				usuarioService.saveRole(new Role(null, "ROLE_ADMIN"));
+				usuarioService.saveRole(new Role(1L, "ROLE_USER"));
+				usuarioService.saveRole(new Role(2L, "ROLE_ADMIN"));
 				
-				usuarioService.salvar(new Usuario(null, "admin", "tulipa", "Administrador", "46999147716", new ArrayList<>()));
+				usuarioService.salvar(new Usuario(3L, 001, "admin", "Administrador", "46999147716", "tulipa", new ArrayList<>()));
 				
 				usuarioService.addRole("admin", "ROLE_USER");
 				usuarioService.addRole("admin", "ROLE_ADMIN");
