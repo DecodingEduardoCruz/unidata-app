@@ -1,7 +1,6 @@
-package br.dev.ec.unidata.resources.usuario;
+package br.dev.ec.unidata.resources.restrito;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,16 +9,12 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -34,7 +29,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import br.dev.ec.unidata.UnidataApplication;
-import br.dev.ec.unidata.domain.service.filter.CustomAuthenticationFilter;
+import br.dev.ec.unidata.domain.filter.CustomAuthenticationFilter;
 import br.dev.ec.unidata.domain.service.usuario.UsuarioService;
 import br.dev.ec.unidata.domain.usuario.Role;
 import br.dev.ec.unidata.domain.usuario.Usuario;
@@ -45,10 +40,10 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/restrito")
 @SecurityRequirement(name = "javainuseapi")
-@Tag(name = "Usuário", description = "Usuários da aplicação.")
-public class UsuarioResource {
+@Tag(name = "Restrito", description = "usuário.")
+public class restrito_usuario {
 	private static final Logger logger = LoggerFactory.getLogger(UnidataApplication.class);
 	private final UsuarioService usuarioService;	
 
@@ -56,27 +51,6 @@ public class UsuarioResource {
 	public ResponseEntity<List<Usuario>> todos(){		
 		logger.info("Busca de usuário solicitada:");
 		return ResponseEntity.ok(usuarioService.getUsuarios());
-	}	
-
-	@PostMapping("/usuario")
-	public ResponseEntity<Usuario> saveCooperado(@RequestBody Usuario usuario){
-		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/novo/usuario").toUriString());
-		logger.info("Novo cadastro solicidado:");
-		return ResponseEntity.created(uri).body(usuarioService.salvar(usuario));
-	}	
-
-	@PostMapping("/role")
-	public ResponseEntity<Role> saveRole(@RequestBody Role role){
-		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/nova/permissao").toUriString());
-		logger.info("Novo cadastro de permissão solicidado:");
-		return ResponseEntity.created(uri).body(usuarioService.saveRole(role));
-	}	
-
-	@PostMapping("/addrole")
-	public ResponseEntity<?> permissaoToCooperado(@RequestBody RoleToCooperado form){
-		usuarioService.addRole(form.getUsername(), form.getRoleName());
-		logger.info("Nova permissão adicionada:");
-		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping("/token")
@@ -106,18 +80,18 @@ public class UsuarioResource {
 				new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 				
 			}catch( Exception e ) {
-				response.setHeader("Erro ",e.getMessage());
+				response.setHeader("token_message ",e.getMessage());
 				response.setStatus(HttpStatus.FORBIDDEN.value());
 				
 				Map<String, String> error = new HashMap<>();		
-				error.put("error_message", e.getMessage());
+				error.put("token_message", e.getMessage());
 				response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 				new ObjectMapper().writeValue(response.getOutputStream(), error);
 			}
 		}else {
-			throw new RuntimeException("Seu Token precisa de atualização!");
+			throw new RuntimeException("Atualise seu token!");
 		}
-		logger.info("Busca de usuário solicitada:");
+		logger.info("Renovação de token solicitada:");
 	}
 }
 

@@ -32,7 +32,7 @@ public class UsuarioServiceImp implements UsuarioService, UserDetailsService{
 	@Override
 	public List<Usuario> getUsuarios() {
 		List<Usuario> usuario = usuarioRep.findAll();
-		if(usuario.isEmpty()) throw new NullPointerException("Não encontramos cooperados cadastrados!");
+		if(usuario.isEmpty()) throw new NullPointerException("Não encontramos usuários cadastrados!");
 		
 		logger.info("Encontramos {} cadastros", usuario.size());
 		return usuario;
@@ -47,7 +47,7 @@ public class UsuarioServiceImp implements UsuarioService, UserDetailsService{
 	}
 	@Override
 	public Usuario salvar(Usuario usuario) {
-		if(usuario == null) throw new NullPointerException("Todos os campos cooperado são obrigatórios para cadastro!");
+		if(usuario == null) throw new NullPointerException("Todos os campos são obrigatórios!");
 		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 		logger.info("Usuário cadastrado {}!", usuario.getName());
 		return usuarioRep.save(usuario);

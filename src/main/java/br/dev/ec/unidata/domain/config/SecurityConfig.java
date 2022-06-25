@@ -15,9 +15,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import br.dev.ec.unidata.domain.service.filter.CustomAuthenticationFilter;
-import br.dev.ec.unidata.domain.service.filter.CustomAuthorizationFilter;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import br.dev.ec.unidata.domain.filter.CustomAuthenticationFilter;
+import br.dev.ec.unidata.domain.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 
 
@@ -42,7 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.headers().addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*"));		
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/", "/swagger/**", "/javainuse-openapi/**").permitAll();
 		http.authorizeRequests().antMatchers("/login/**", "/token/**").permitAll();
-		http.authorizeRequests().anyRequest().permitAll();
+		http.authorizeRequests().antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN");
+		http.authorizeRequests().antMatchers("/restrito/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+		http.authorizeRequests().antMatchers("/publico/**").permitAll();
+		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(customAuthenticationFilter);
 		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
