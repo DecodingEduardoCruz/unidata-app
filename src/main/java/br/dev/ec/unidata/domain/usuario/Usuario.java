@@ -31,7 +31,7 @@ public class Usuario {
 	private String name;
 	private String fone;
 	
-	@JoinTable(schema = "unidata", name = "usuario_roles")
+	@JoinTable(name = "usuario_roles")
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Collection<Role> roles = new ArrayList<>();
 }
