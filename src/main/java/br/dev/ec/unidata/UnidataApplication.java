@@ -32,10 +32,10 @@ public class UnidataApplication extends SpringBootServletInitializer{
 		return  new BCryptPasswordEncoder();
 	}
 	
-	
+	@Bean
 	CommandLineRunner run(UsuarioService usuarioService) {		
 		return args -> {	
-			if(usuarioService.getUsuarios().isEmpty()) {
+			if(usuarioService.getUsuarios() == null) {
 				usuarioService.saveRole(new Role(null, "ROLE_USER"));
 				usuarioService.saveRole(new Role(null, "ROLE_ADMIN"));
 				
