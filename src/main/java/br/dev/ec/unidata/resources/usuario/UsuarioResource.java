@@ -38,6 +38,7 @@ import br.dev.ec.unidata.domain.service.filter.CustomAuthenticationFilter;
 import br.dev.ec.unidata.domain.service.usuario.UsuarioService;
 import br.dev.ec.unidata.domain.usuario.Role;
 import br.dev.ec.unidata.domain.usuario.Usuario;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/")
+@SecurityRequirement(name = "javainuseapi")
 @Tag(name = "Usuário", description = "Usuários da aplicação.")
 public class UsuarioResource {
 	private static final Logger logger = LoggerFactory.getLogger(UnidataApplication.class);
