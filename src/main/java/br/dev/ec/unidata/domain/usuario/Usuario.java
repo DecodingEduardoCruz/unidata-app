@@ -4,7 +4,6 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,7 +18,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity @Data @NoArgsConstructor @AllArgsConstructor
-@Table(schema = "unidata", name = "usuario")
 public class Usuario {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	
