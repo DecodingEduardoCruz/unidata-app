@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity @Data @NoArgsConstructor @AllArgsConstructor
 @Table(schema = "unidata", name = "roles")
 public class Role {
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	
-	private long id;
+	@Id @GeneratedValue(strategy = GenerationType.AUTO)	
+	private Long id;
 	private String name;
 }

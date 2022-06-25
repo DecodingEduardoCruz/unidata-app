@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,10 +20,13 @@ import lombok.NoArgsConstructor;
 public class Usuario {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	
-	private long id;
-	private String name;
+	private Long id;	
+	@Column(unique = true)
 	private String username;
-	private String password;
+	private String password;	
+
+	private String name;
+	private String fone;
 	
 	@JoinTable(schema = "unidata", name = "usuario_roles")
 	@ManyToMany(fetch = FetchType.EAGER)
