@@ -1,17 +1,42 @@
 package br.dev.ec.unidata.resources.usuario;
 
+import java.io.IOException;
+import java.net.URI;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.core.exc.StreamWriteException;
+import com.fasterxml.jackson.databind.DatabindException;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import br.dev.ec.unidata.UnidataApplication;
+import br.dev.ec.unidata.domain.service.filter.CustomAuthenticationFilter;
 import br.dev.ec.unidata.domain.service.usuario.UsuarioService;
+import br.dev.ec.unidata.domain.usuario.Role;
 import br.dev.ec.unidata.domain.usuario.Usuario;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
@@ -30,29 +55,29 @@ public class UsuarioResource {
 		logger.info("Busca de cooperado solicitada:");
 		return ResponseEntity.ok(usuarioService.getUsuarios());
 	}	
-/*
-	@PostMapping("/cooperado")
-	public ResponseEntity<Cooperado> saveCooperado(@RequestBody Cooperado cooperado){
-		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/cooperados/auth/v1/cooperado/novo").toUriString());
+
+	@PostMapping("/usuario")
+	public ResponseEntity<Usuario> saveCooperado(@RequestBody Usuario usuario){
+		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/novo/usuario").toUriString());
 		logger.info("Novo cadastro solicidado:");
-		return ResponseEntity.created(uri).body(cooperadoService.saveCooperado(cooperado));
+		return ResponseEntity.created(uri).body(usuarioService.salvar(usuario));
 	}	
 
 	@PostMapping("/permissao")
 	public ResponseEntity<Role> saveRole(@RequestBody Role role){
-		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/cooperados/auth/v1/permissao/novo").toUriString());
+		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/nova/permissao").toUriString());
 		logger.info("Novo cadastro de permissão solicidado:");
-		return ResponseEntity.created(uri).body(cooperadoService.saveRole(role));
+		return ResponseEntity.created(uri).body(usuarioService.saveRole(role));
 	}	
 
-	@PostMapping("/cooperado-permitir")
+	@PostMapping("/permisao")
 	public ResponseEntity<?> permissaoToCooperado(@RequestBody RoleToCooperado form){
-		cooperadoService.addRoleToCooperado(form.getMatricula(), form.getRoleName());
+		usuarioService.addRole(form.getUsername(), form.getRoleName());
 		logger.info("Nova permissão adicionada:");
 		return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping("/refreshToken")
+	@GetMapping("/token")
 	public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws StreamWriteException, DatabindException, IOException{	
 		String authorizationHeader = request.getHeader(AUTHORIZATION);
 		
@@ -63,13 +88,13 @@ public class UsuarioResource {
 				JWTVerifier verifier = JWT.require(algorithm).build();
 				DecodedJWT decodeJWT = verifier.verify(refreshToken);
 				String username = decodeJWT.getSubject();
-				Cooperado cooperado = cooperadoService.daMatricula(Integer.parseInt(username));
+				Usuario usuario = usuarioService.username(username);
 				
 				String accessToken = JWT.create()
-						.withSubject(cooperado.getMatricula().toString())
-						.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+						.withSubject(usuario.getName())
+						.withExpiresAt(new Date(System.currentTimeMillis() + 360*  60 * 1000))
 						.withIssuer(request.getRequestURL().toString())
-						.withClaim("roles", cooperado.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
+						.withClaim("roles", usuario.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
 						.sign(algorithm);
 				
 				Map<String, String> tokens = new HashMap<>();		
@@ -91,7 +116,7 @@ public class UsuarioResource {
 			throw new RuntimeException("Seu Token precisa de atualização!");
 		}
 		logger.info("Busca de cooperado solicitada:");
-	}*/
+	}
 }
 
 @Data
