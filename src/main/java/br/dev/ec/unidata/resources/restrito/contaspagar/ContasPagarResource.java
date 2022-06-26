@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/restrito")
 @SecurityRequirement(name = "javainuseapi")
-@Tag(name = "Contas a pagar:", description = "Administrador")
+@Tag(name = "Contas:", description = "A pagar")
 public class ContasPagarResource {
 	private static final Logger logger = LoggerFactory.getLogger(UnidataApplication.class);
 	private final ContasPagarService contasPagar;

@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 @SecurityRequirement(name = "javainuseapi")
-@Tag(name = "Usuário", description = "Administrador")
+@Tag(name = "Usuário", description = "dados de usuário")
 public class UsuarioResources {
 	private static final Logger logger = LoggerFactory.getLogger(UnidataApplication.class);
 	private final UsuarioService usuarioService;	
