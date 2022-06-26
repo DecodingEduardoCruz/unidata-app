@@ -28,10 +28,10 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.dev.ec.unidata.UnidataApplication;
-import br.dev.ec.unidata.domain.filter.CustomAuthenticationFilter;
 import br.dev.ec.unidata.domain.model.usuario.Role;
 import br.dev.ec.unidata.domain.model.usuario.Usuario;
 import br.dev.ec.unidata.domain.service.usuario.UsuarioService;
+import br.dev.ec.unidata.security.filter.CustomAuthenticationFilter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 

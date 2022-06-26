@@ -1,9 +1,12 @@
 package br.dev.ec.unidata.resources.administrador.usuario;
 
 import java.net.URI;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +26,16 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/admin")
 @SecurityRequirement(name = "javainuseapi")
 @Tag(name = "Usuário", description = "Administrador")
-public class admin_usuario {
+public class UsuarioResources {
 	private static final Logger logger = LoggerFactory.getLogger(UnidataApplication.class);
 	private final UsuarioService usuarioService;	
 
+	@GetMapping("/usuario")
+	public ResponseEntity<List<Usuario>> todos(){		
+		logger.info("Busca de usuário solicitada:");
+		return ResponseEntity.ok(usuarioService.getUsuarios());
+	}
+	
 	@PostMapping("/usuario")
 	public ResponseEntity<Usuario> saveCooperado(@RequestBody Usuario usuario){
 		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/novo/usuario").toUriString());

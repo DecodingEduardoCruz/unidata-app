@@ -1,4 +1,4 @@
-package br.dev.ec.unidata.domain.filter;
+package br.dev.ec.unidata.security.filter;
 
 import java.io.IOException;
 import java.util.Date;

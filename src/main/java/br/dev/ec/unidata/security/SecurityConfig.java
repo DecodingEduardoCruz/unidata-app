@@ -1,4 +1,4 @@
-package br.dev.ec.unidata.domain.config;
+package br.dev.ec.unidata.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +17,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import br.dev.ec.unidata.domain.filter.CustomAuthenticationFilter;
-import br.dev.ec.unidata.domain.filter.CustomAuthorizationFilter;
+import br.dev.ec.unidata.security.filter.CustomAuthenticationFilter;
+import br.dev.ec.unidata.security.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 
 
